@@ -61,3 +61,11 @@ logout_output = square_authentication_helper_obj.logout_v0(
     refresh_token=login_username_output["data"]["main"]["refresh_token"],
 )
 print(logout_output)
+
+# Example: delete user
+# note: access token can still be used after login, until it expires
+delete_user_output = square_authentication_helper_obj.delete_user_v0(
+    password=password,
+    access_token=generate_access_token_output["data"]["main"]["access_token"],
+)
+print(delete_user_output)

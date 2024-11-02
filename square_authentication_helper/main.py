@@ -170,3 +170,22 @@ class SquareAuthenticationHelper:
             )
         except Exception:
             raise
+
+    def delete_user_v0(
+        self,
+        password: str,
+        access_token: str,
+    ):
+        try:
+            endpoint = "delete_user/v0"
+            params = {
+                "password": password,
+            }
+            headers = {
+                "access_token": access_token,
+            }
+            return self._make_request(
+                method="DELETE", endpoint=endpoint, params=params, headers=headers
+            )
+        except Exception:
+            raise
