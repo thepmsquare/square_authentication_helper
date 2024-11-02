@@ -35,6 +35,14 @@ login_username_output = square_authentication_helper_obj.login_username_v0(
 )
 print(login_username_output)
 
+# Example: update username
+new_username = "temp" + str(randint(1, 2000))
+update_username_output = square_authentication_helper_obj.update_username_v0(
+    new_username=new_username,
+    access_token=login_username_output["data"]["main"]["access_token"],
+)
+print(update_username_output)
+
 # Example: generate access token
 generate_access_token_output = (
     square_authentication_helper_obj.generate_access_token_v0(

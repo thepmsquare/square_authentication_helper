@@ -151,3 +151,22 @@ class SquareAuthenticationHelper:
             )
         except Exception:
             raise
+
+    def update_username_v0(
+        self,
+        new_username: str,
+        access_token: str,
+    ):
+        try:
+            endpoint = "update_username/v0"
+            params = {
+                "new_username": new_username,
+            }
+            headers = {
+                "access_token": access_token,
+            }
+            return self._make_request(
+                method="PATCH", endpoint=endpoint, params=params, headers=headers
+            )
+        except Exception:
+            raise

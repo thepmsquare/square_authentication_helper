@@ -20,6 +20,10 @@ pip install square_authentication_helper
 
 ## changelog
 
+### v1.1.0
+
+- add function for update_username_v0.
+
 ### v1.0.0
 
 - initial implementation.
