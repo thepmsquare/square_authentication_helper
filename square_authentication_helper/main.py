@@ -45,11 +45,11 @@ class SquareAuthenticationHelper:
     ):
         try:
             endpoint = "register_username/v0"
-            params = {
+            data = {
                 "username": username,
                 "password": password,
             }
-            return self._make_request(method="POST", endpoint=endpoint, params=params)
+            return self._make_request(method="POST", endpoint=endpoint, data=data)
         except Exception:
             raise
 
@@ -61,12 +61,12 @@ class SquareAuthenticationHelper:
     ):
         try:
             endpoint = "login_username/v0"
-            params = {
+            data = {
                 "username": username,
                 "password": password,
                 "app_id": app_id,
             }
-            return self._make_request(method="GET", endpoint=endpoint, params=params)
+            return self._make_request(method="GET", endpoint=endpoint, data=data)
         except Exception:
             raise
 
@@ -178,14 +178,14 @@ class SquareAuthenticationHelper:
     ):
         try:
             endpoint = "delete_user/v0"
-            params = {
+            data = {
                 "password": password,
             }
             headers = {
                 "access_token": access_token,
             }
             return self._make_request(
-                method="DELETE", endpoint=endpoint, params=params, headers=headers
+                method="DELETE", endpoint=endpoint, data=data, headers=headers
             )
         except Exception:
             raise
@@ -198,7 +198,7 @@ class SquareAuthenticationHelper:
     ):
         try:
             endpoint = "update_password/v0"
-            params = {
+            data = {
                 "old_password": old_password,
                 "new_password": new_password,
             }
@@ -206,7 +206,7 @@ class SquareAuthenticationHelper:
                 "access_token": access_token,
             }
             return self._make_request(
-                method="PATCH", endpoint=endpoint, params=params, headers=headers
+                method="PATCH", endpoint=endpoint, data=data, headers=headers
             )
         except Exception:
             raise
