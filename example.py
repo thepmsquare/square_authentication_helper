@@ -43,6 +43,15 @@ update_username_output = square_authentication_helper_obj.update_username_v0(
 )
 print(update_username_output)
 
+# Example: update password
+new_password = "temp_new"
+update_password_output = square_authentication_helper_obj.update_password_v0(
+    old_password=password,
+    new_password=new_password,
+    access_token=login_username_output["data"]["main"]["access_token"],
+)
+print(update_username_output)
+
 # Example: generate access token
 generate_access_token_output = (
     square_authentication_helper_obj.generate_access_token_v0(
@@ -65,7 +74,7 @@ print(logout_output)
 # Example: delete user
 # note: access token can still be used after login, until it expires
 delete_user_output = square_authentication_helper_obj.delete_user_v0(
-    password=password,
+    password=new_password,
     access_token=generate_access_token_output["data"]["main"]["access_token"],
 )
 print(delete_user_output)

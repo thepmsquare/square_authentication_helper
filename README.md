@@ -22,7 +22,10 @@ pip install square_authentication_helper
 
 ### v1.1.0
 
-- add function for update_username_v0.
+- add functions for
+    - update_username_v0
+    - update_password_v0
+    - delete_user_v0
 
 ### v1.0.0
 

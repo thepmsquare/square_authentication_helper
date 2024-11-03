@@ -189,3 +189,24 @@ class SquareAuthenticationHelper:
             )
         except Exception:
             raise
+
+    def update_password_v0(
+        self,
+        old_password: str,
+        new_password: str,
+        access_token: str,
+    ):
+        try:
+            endpoint = "update_password/v0"
+            params = {
+                "old_password": old_password,
+                "new_password": new_password,
+            }
+            headers = {
+                "access_token": access_token,
+            }
+            return self._make_request(
+                method="PATCH", endpoint=endpoint, params=params, headers=headers
+            )
+        except Exception:
+            raise
