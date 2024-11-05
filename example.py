@@ -56,8 +56,6 @@ print(update_username_output)
 # Example: generate access token
 generate_access_token_output = (
     square_authentication_helper_obj.generate_access_token_v0(
-        user_id=user_id,
-        app_id=app_id,
         refresh_token=login_username_output["data"]["main"]["refresh_token"],
     )
 )

@@ -74,22 +74,14 @@ class SquareAuthenticationHelper:
 
     def generate_access_token_v0(
         self,
-        user_id: str,
-        app_id: int,
         refresh_token: str,
     ):
         try:
             endpoint = "generate_access_token/v0"
-            params = {
-                "user_id": user_id,
-                "app_id": app_id,
-            }
             headers = {
                 "refresh_token": refresh_token,
             }
-            return self._make_request(
-                method="GET", endpoint=endpoint, params=params, headers=headers
-            )
+            return self._make_request(method="GET", endpoint=endpoint, headers=headers)
         except Exception:
             raise
 
