@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from uuid import UUID
 
 import requests
@@ -42,12 +42,14 @@ class SquareAuthenticationHelper:
         self,
         username: str,
         password: str,
+        app_id: Optional[int] = None,
     ):
         try:
             endpoint = "register_username/v0"
             data = {
                 "username": username,
                 "password": password,
+                "app_id": app_id,
             }
             return self._make_request(method="POST", endpoint=endpoint, data=data)
         except Exception:

@@ -27,6 +27,7 @@ pip install square_authentication_helper
     - update_password_v0
     - delete_user_v0
 - move data in password related endpoints to request body from params.
+- new optional param, app_id in register_username_v0.
 
 ### v1.0.0
 
