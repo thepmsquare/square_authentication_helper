@@ -29,6 +29,7 @@ pip install square_authentication_helper
 - move data in password related endpoints to request body from params.
 - new optional param, app_id in register_username_v0.
 - generate_access_token_v0 now only needs refresh token.
+- logout_v0 now only needs refresh token.
 
 ### v1.0.0
 

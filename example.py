@@ -63,15 +63,12 @@ print(generate_access_token_output)
 
 # Example: logout
 logout_output = square_authentication_helper_obj.logout_v0(
-    user_id=user_id,
-    app_id=app_id,
-    access_token=generate_access_token_output["data"]["main"]["access_token"],
     refresh_token=login_username_output["data"]["main"]["refresh_token"],
 )
 print(logout_output)
 
 # Example: delete user
-# note: access token can still be used after login, until it expires
+# note: access token can still be used after log out, until it expires.
 delete_user_output = square_authentication_helper_obj.delete_user_v0(
     password=new_password,
     access_token=generate_access_token_output["data"]["main"]["access_token"],

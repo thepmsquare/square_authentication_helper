@@ -87,23 +87,15 @@ class SquareAuthenticationHelper:
 
     def logout_v0(
         self,
-        user_id: str,
-        app_id: int,
-        access_token: str,
         refresh_token: str,
     ):
         try:
             endpoint = "logout/v0"
-            params = {
-                "user_id": user_id,
-                "app_id": app_id,
-            }
             headers = {
                 "refresh_token": refresh_token,
-                "access_token": access_token,
             }
             return self._make_request(
-                method="DELETE", endpoint=endpoint, params=params, headers=headers
+                method="DELETE", endpoint=endpoint, headers=headers
             )
         except Exception:
             raise
