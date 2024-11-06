@@ -15,19 +15,20 @@ register_username_output = square_authentication_helper_obj.register_username_v0
 )
 print(register_username_output)
 
-
-# Example: update user app ids
+# Example: get user app ids
 user_id = register_username_output["data"]["main"]["user_id"]
-update_user_app_ids_output = square_authentication_helper_obj.update_user_app_ids_v0(
-    user_id=user_id, app_ids_to_add=[app_id], app_ids_to_remove=[]
-)
-print(update_user_app_ids_output)
-
-# Example: update user app ids (redundant but will not insert any new data)
 get_user_app_ids_output = square_authentication_helper_obj.get_user_app_ids_v0(
     user_id=user_id,
 )
 print(get_user_app_ids_output)
+
+# Example: update user app ids (redundant but will not insert any new data)
+update_user_app_ids_output = square_authentication_helper_obj.update_user_app_ids_v0(
+    access_token=register_username_output["data"]["main"]["access_token"],
+    app_ids_to_add=[app_id],
+    app_ids_to_remove=[],
+)
+print(update_user_app_ids_output)
 
 
 # Example: login username

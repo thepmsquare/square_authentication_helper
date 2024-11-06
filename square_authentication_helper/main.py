@@ -119,21 +119,21 @@ class SquareAuthenticationHelper:
 
     def update_user_app_ids_v0(
         self,
-        user_id: UUID,
+        access_token: str,
         app_ids_to_add: List[int],
         app_ids_to_remove: List[int],
     ):
         try:
             endpoint = "update_user_app_ids/v0"
-            params = {
-                "user_id": user_id,
+            headers = {
+                "access_token": access_token,
             }
             payload = {
                 "app_ids_to_add": app_ids_to_add,
                 "app_ids_to_remove": app_ids_to_remove,
             }
             return self._make_request(
-                method="PATCH", endpoint=endpoint, params=params, data=payload
+                method="PATCH", endpoint=endpoint, headers=headers, data=payload
             )
         except Exception:
             raise
