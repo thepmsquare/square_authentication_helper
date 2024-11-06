@@ -15,10 +15,9 @@ register_username_output = square_authentication_helper_obj.register_username_v0
 )
 print(register_username_output)
 
-# Example: get user app ids
-user_id = register_username_output["data"]["main"]["user_id"]
-get_user_app_ids_output = square_authentication_helper_obj.get_user_app_ids_v0(
-    user_id=user_id,
+# Example: get user details
+get_user_app_ids_output = square_authentication_helper_obj.get_user_details_v0(
+    access_token=register_username_output["data"]["main"]["access_token"],
 )
 print(get_user_app_ids_output)
 

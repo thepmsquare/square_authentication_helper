@@ -20,7 +20,7 @@ pip install square_authentication_helper
 
 ## changelog
 
-### v1.1.0
+### v2.0.0
 
 - add functions for
     - update_username_v0
@@ -31,6 +31,7 @@ pip install square_authentication_helper
 - generate_access_token_v0 now only needs refresh token.
 - logout_v0 now only needs refresh token.
 - update_user_app_ids_v0 now only updates ids for self (user). added access token as input param and removed user_id.
+- get_user_app_ids_v0 is now get_user_details_v0 with access token as the only input param.
 
 ### v1.0.0
 

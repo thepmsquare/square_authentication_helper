@@ -1,5 +1,4 @@
 from typing import List, Optional
-from uuid import UUID
 
 import requests
 
@@ -100,19 +99,19 @@ class SquareAuthenticationHelper:
         except Exception:
             raise
 
-    def get_user_app_ids_v0(
+    def get_user_details_v0(
         self,
-        user_id: UUID,
+        access_token: str,
     ):
         try:
-            endpoint = "get_user_app_ids/v0"
-            params = {
-                "user_id": user_id,
+            endpoint = "get_user_details/v0"
+            headers = {
+                "access_token": access_token,
             }
             return self._make_request(
                 method="GET",
                 endpoint=endpoint,
-                params=params,
+                headers=headers,
             )
         except Exception:
             raise
