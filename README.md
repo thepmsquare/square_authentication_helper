@@ -20,6 +20,10 @@ pip install square_authentication_helper
 
 ## changelog
 
+### v2.1.0
+
+- login_username_v0 now uses post method and has new optional flag assign_app_id_if_missing that defaults to false.
+
 ### v2.0.0
 
 - add functions for

@@ -59,6 +59,7 @@ class SquareAuthenticationHelper:
         username: str,
         password: str,
         app_id: int,
+        assign_app_id_if_missing: bool = False,
     ):
         try:
             endpoint = "login_username/v0"
@@ -66,8 +67,9 @@ class SquareAuthenticationHelper:
                 "username": username,
                 "password": password,
                 "app_id": app_id,
+                "assign_app_id_if_missing": assign_app_id_if_missing,
             }
-            return self._make_request(method="GET", endpoint=endpoint, data=data)
+            return self._make_request(method="POST", endpoint=endpoint, data=data)
         except Exception:
             raise
 

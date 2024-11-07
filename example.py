@@ -32,7 +32,10 @@ print(update_user_app_ids_output)
 
 # Example: login username
 login_username_output = square_authentication_helper_obj.login_username_v0(
-    username=username, password=password, app_id=app_id
+    username=username,
+    password=password,
+    app_id=app_id,
+    assign_app_id_if_missing=False,
 )
 print(login_username_output)
 
