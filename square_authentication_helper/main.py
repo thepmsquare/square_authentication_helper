@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-import requests
+from square_commons.api_utils import make_request_json_output
 
 
 class SquareAuthenticationHelper:
@@ -20,20 +20,15 @@ class SquareAuthenticationHelper:
 
     def _make_request(self, method, endpoint, data=None, params=None, headers=None):
         try:
-            url = f"{self.global_str_square_authentication_url_base}/{endpoint}"
-            if headers:
-                headers = {
-                    key.replace("_", "-"): value for key, value in headers.items()
-                }
-            response = requests.request(
-                method,
-                url,
-                json=data,
+            return make_request_json_output(
+                method=method,
+                base_url=self.global_str_square_authentication_url_base,
+                endpoint=endpoint,
+                data=data,
                 params=params,
                 headers=headers,
             )
-            response.raise_for_status()
-            return response.json()
+
         except Exception:
             raise
 
