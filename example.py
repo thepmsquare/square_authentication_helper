@@ -1,6 +1,6 @@
 from random import randint
 
-from square_authentication_helper import SquareAuthenticationHelper
+from square_authentication_helper import SquareAuthenticationHelper, TokenType
 
 square_authentication_helper_obj = SquareAuthenticationHelper()
 username = "temp" + str(randint(1, 2000))
@@ -63,6 +63,15 @@ generate_access_token_output = (
     )
 )
 print(generate_access_token_output)
+
+# Example: validate access token
+validate_access_token_output = (
+    square_authentication_helper_obj.validate_and_get_payload_from_token_v0(
+        token=generate_access_token_output["data"]["main"]["access_token"],
+        token_type=TokenType.access_token,
+    )
+)
+print(validate_access_token_output)
 
 # Example: logout
 logout_output = square_authentication_helper_obj.logout_v0(

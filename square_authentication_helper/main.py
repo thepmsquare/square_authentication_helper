@@ -2,6 +2,8 @@ from typing import List, Optional
 
 from square_commons.api_utils import make_request_json_output
 
+from square_authentication_helper.pydantic_models import TokenType
+
 
 class SquareAuthenticationHelper:
     def __init__(
@@ -189,6 +191,19 @@ class SquareAuthenticationHelper:
             }
             return self._make_request(
                 method="PATCH", endpoint=endpoint, data=data, headers=headers
+            )
+        except Exception:
+            raise
+
+    def validate_and_get_payload_from_token_v0(self, token: str, token_type: TokenType):
+        try:
+            endpoint = "validate_and_get_payload_from_token/v0"
+            params = {"token_type": token_type.value}
+            headers = {
+                "token": token,
+            }
+            return self._make_request(
+                method="GET", endpoint=endpoint, headers=headers, params=params
             )
         except Exception:
             raise
