@@ -20,6 +20,10 @@ pip install square_authentication_helper
 
 ## changelog
 
+### v2.3.0
+
+- add logout_apps_v0 and logout_all_v0.
+
 ### v2.2.0
 
 - add validate_and_get_payload_from_token_v0.

@@ -79,6 +79,19 @@ logout_output = square_authentication_helper_obj.logout_v0(
 )
 print(logout_output)
 
+# Example: logout apps
+logout_apps_output = square_authentication_helper_obj.logout_apps_v0(
+    access_token=login_username_output["data"]["main"]["access_token"],
+    app_ids=[app_id],
+)
+print(logout_apps_output)
+
+# Example: logout all
+logout__all_output = square_authentication_helper_obj.logout_all_v0(
+    access_token=login_username_output["data"]["main"]["access_token"],
+)
+print(logout__all_output)
+
 # Example: delete user
 # note: access token can still be used after log out, until it expires.
 delete_user_output = square_authentication_helper_obj.delete_user_v0(

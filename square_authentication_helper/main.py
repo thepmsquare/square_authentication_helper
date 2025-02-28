@@ -98,6 +98,40 @@ class SquareAuthenticationHelper:
         except Exception:
             raise
 
+    def logout_apps_v0(
+        self,
+        access_token: str,
+        app_ids: List[int],
+    ):
+        try:
+            endpoint = "logout/apps/v0"
+            headers = {
+                "access_token": access_token,
+            }
+            body = {
+                "app_ids": app_ids,
+            }
+            return self._make_request(
+                method="DELETE", endpoint=endpoint, headers=headers, data=body
+            )
+        except Exception:
+            raise
+
+    def logout_all_v0(
+        self,
+        access_token: str,
+    ):
+        try:
+            endpoint = "logout/all/v0"
+            headers = {
+                "access_token": access_token,
+            }
+            return self._make_request(
+                method="DELETE", endpoint=endpoint, headers=headers
+            )
+        except Exception:
+            raise
+
     def get_user_details_v0(
         self,
         access_token: str,
