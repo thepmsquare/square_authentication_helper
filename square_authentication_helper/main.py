@@ -20,13 +20,15 @@ class SquareAuthenticationHelper:
         except Exception:
             raise
 
-    def _make_request(self, method, endpoint, data=None, params=None, headers=None):
+    def _make_request(
+        self, method, endpoint, json=None, data=None, params=None, headers=None
+    ):
         try:
             return make_request_json_output(
                 method=method,
                 base_url=self.global_str_square_authentication_url_base,
                 endpoint=endpoint,
-                data=data,
+                json=json,
                 params=params,
                 headers=headers,
             )
@@ -47,7 +49,7 @@ class SquareAuthenticationHelper:
                 "password": password,
                 "app_id": app_id,
             }
-            return self._make_request(method="POST", endpoint=endpoint, data=data)
+            return self._make_request(method="POST", endpoint=endpoint, json=data)
         except Exception:
             raise
 
@@ -66,7 +68,7 @@ class SquareAuthenticationHelper:
                 "app_id": app_id,
                 "assign_app_id_if_missing": assign_app_id_if_missing,
             }
-            return self._make_request(method="POST", endpoint=endpoint, data=data)
+            return self._make_request(method="POST", endpoint=endpoint, json=data)
         except Exception:
             raise
 
@@ -112,7 +114,7 @@ class SquareAuthenticationHelper:
                 "app_ids": app_ids,
             }
             return self._make_request(
-                method="DELETE", endpoint=endpoint, headers=headers, data=body
+                method="DELETE", endpoint=endpoint, headers=headers, json=body
             )
         except Exception:
             raise
@@ -165,7 +167,7 @@ class SquareAuthenticationHelper:
                 "app_ids_to_remove": app_ids_to_remove,
             }
             return self._make_request(
-                method="PATCH", endpoint=endpoint, headers=headers, data=payload
+                method="PATCH", endpoint=endpoint, headers=headers, json=payload
             )
         except Exception:
             raise
@@ -203,7 +205,7 @@ class SquareAuthenticationHelper:
                 "access_token": access_token,
             }
             return self._make_request(
-                method="DELETE", endpoint=endpoint, data=data, headers=headers
+                method="DELETE", endpoint=endpoint, json=data, headers=headers
             )
         except Exception:
             raise
@@ -224,7 +226,7 @@ class SquareAuthenticationHelper:
                 "access_token": access_token,
             }
             return self._make_request(
-                method="PATCH", endpoint=endpoint, data=data, headers=headers
+                method="PATCH", endpoint=endpoint, json=data, headers=headers
             )
         except Exception:
             raise

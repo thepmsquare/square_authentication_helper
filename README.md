@@ -20,6 +20,10 @@ pip install square_authentication_helper
 
 ## changelog
 
+### v2.3.1
+
+- bump to square_commons>=2.0.0.
+
 ### v2.3.0
 
 - add logout_apps_v0 and logout_all_v0.
