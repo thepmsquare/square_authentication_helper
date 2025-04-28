@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Tuple, IO
 
 from square_commons.api_utils import make_request_json_output
 
@@ -21,7 +21,14 @@ class SquareAuthenticationHelper:
             raise
 
     def _make_request(
-        self, method, endpoint, json=None, data=None, params=None, headers=None
+        self,
+        method,
+        endpoint,
+        json=None,
+        data=None,
+        params=None,
+        headers=None,
+        files=None,
     ):
         try:
             return make_request_json_output(
@@ -29,8 +36,10 @@ class SquareAuthenticationHelper:
                 base_url=self.global_str_square_authentication_url_base,
                 endpoint=endpoint,
                 json=json,
+                data=data,
                 params=params,
                 headers=headers,
+                files=files,
             )
 
         except Exception:
@@ -240,6 +249,24 @@ class SquareAuthenticationHelper:
             }
             return self._make_request(
                 method="GET", endpoint=endpoint, headers=headers, params=params
+            )
+        except Exception:
+            raise
+
+    def update_profile_photo_v0(
+        self, access_token: str, profile_photo: Tuple[str, IO, str]
+    ):
+        try:
+            endpoint = "update_profile_photo/v0"
+
+            headers = {
+                "access_token": access_token,
+            }
+            files = {
+                "profile_photo": profile_photo,
+            }
+            return self._make_request(
+                method="PATCH", endpoint=endpoint, headers=headers, files=files
             )
         except Exception:
             raise

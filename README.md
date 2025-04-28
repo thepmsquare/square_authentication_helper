@@ -20,6 +20,10 @@ pip install square_authentication_helper
 
 ## changelog
 
+### v2.4.0
+
+- add update_profile_photo_v0.
+
 ### v2.3.1
 
 - bump to square_commons>=2.0.0.
