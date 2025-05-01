@@ -20,6 +20,10 @@ pip install square_authentication_helper
 
 ## changelog
 
+### v2.4.1
+
+- make profile_photo in update_profile_photo_v0 optional.
+
 ### v2.4.0
 
 - add update_profile_photo_v0.

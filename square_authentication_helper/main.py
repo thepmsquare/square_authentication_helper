@@ -254,7 +254,7 @@ class SquareAuthenticationHelper:
             raise
 
     def update_profile_photo_v0(
-        self, access_token: str, profile_photo: Tuple[str, IO, str]
+        self, access_token: str, profile_photo: Tuple[str, IO, str] | None
     ):
         try:
             endpoint = "update_profile_photo/v0"
@@ -262,9 +262,12 @@ class SquareAuthenticationHelper:
             headers = {
                 "access_token": access_token,
             }
-            files = {
-                "profile_photo": profile_photo,
-            }
+            if profile_photo:
+                files = {
+                    "profile_photo": profile_photo,
+                }
+            else:
+                files = None
             return self._make_request(
                 method="PATCH", endpoint=endpoint, headers=headers, files=files
             )
