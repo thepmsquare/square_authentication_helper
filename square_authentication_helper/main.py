@@ -214,7 +214,7 @@ class SquareAuthenticationHelper:
                 "access_token": access_token,
             }
             return self._make_request(
-                method="DELETE", endpoint=endpoint, json=data, headers=headers
+                method="POST", endpoint=endpoint, json=data, headers=headers
             )
         except Exception:
             raise

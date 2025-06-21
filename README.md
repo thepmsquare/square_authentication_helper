@@ -20,6 +20,10 @@ pip install square_authentication_helper
 
 ## changelog
 
+### v2.5.0 (in progress)
+
+- delete_user_v0 now uses post method.
+
 ### v2.4.1
 
 - make profile_photo in update_profile_photo_v0 optional.

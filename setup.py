@@ -4,7 +4,7 @@ package_name = "square_authentication_helper"
 
 setup(
     name=package_name,
-    version="2.4.1",
+    version="2.5.0",
     packages=find_packages(),
     install_requires=["square_commons>=2.0.0"],
     author="thePmSquare",
