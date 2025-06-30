@@ -23,6 +23,9 @@ pip install square_authentication_helper
 ### v2.5.0 (in progress)
 
 - delete_user_v0 now uses post method.
+- add update_user_recovery_methods_v0.
+- dependencies
+    - add square_database_structure>=2.5.7.
 
 ### v2.4.1
 

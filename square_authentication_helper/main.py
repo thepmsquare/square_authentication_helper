@@ -1,6 +1,7 @@
 from typing import List, Optional, Tuple, IO
 
 from square_commons.api_utils import make_request_json_output
+from square_database_structure.square.authentication.enums import RecoveryMethodEnum
 
 from square_authentication_helper.pydantic_models import TokenType
 
@@ -270,6 +271,28 @@ class SquareAuthenticationHelper:
                 files = None
             return self._make_request(
                 method="PATCH", endpoint=endpoint, headers=headers, files=files
+            )
+        except Exception:
+            raise
+
+    def update_user_recovery_methods_v0(
+        self,
+        access_token: str,
+        recovery_methods_to_add: List[RecoveryMethodEnum],
+        recovery_methods_to_remove: List[RecoveryMethodEnum],
+    ):
+        try:
+            endpoint = "update_user_recovery_methods/v0"
+
+            headers = {
+                "access_token": access_token,
+            }
+            json = {
+                "recovery_methods_to_add": recovery_methods_to_add,
+                "recovery_methods_to_remove": recovery_methods_to_remove,
+            }
+            return self._make_request(
+                method="PATCH", endpoint=endpoint, headers=headers, json=json
             )
         except Exception:
             raise
