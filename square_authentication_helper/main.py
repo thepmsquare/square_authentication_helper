@@ -296,3 +296,17 @@ class SquareAuthenticationHelper:
             )
         except Exception:
             raise
+
+    def generate_account_backup_codes_v0(
+        self,
+        access_token: str,
+    ):
+        try:
+            endpoint = "generate_account_backup_codes/v0"
+
+            headers = {
+                "access_token": access_token,
+            }
+            return self._make_request(method="POST", endpoint=endpoint, headers=headers)
+        except Exception:
+            raise
