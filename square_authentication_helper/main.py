@@ -310,3 +310,25 @@ class SquareAuthenticationHelper:
             return self._make_request(method="POST", endpoint=endpoint, headers=headers)
         except Exception:
             raise
+
+    def reset_password_and_login_using_backup_code_v0(
+        self,
+        backup_code: str,
+        username: str,
+        new_password: str,
+        app_id: int,
+        logout_other_sessions: bool = False,
+    ):
+        try:
+            endpoint = "reset_password_and_login_using_backup_code/v0"
+
+            json = {
+                "backup_code": backup_code,
+                "username": username,
+                "new_password": new_password,
+                "app_id": app_id,
+                "logout_other_sessions": logout_other_sessions,
+            }
+            return self._make_request(method="POST", endpoint=endpoint, json=json)
+        except Exception:
+            raise
