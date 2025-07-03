@@ -332,3 +332,17 @@ class SquareAuthenticationHelper:
             return self._make_request(method="POST", endpoint=endpoint, json=json)
         except Exception:
             raise
+
+    def send_reset_password_email_v0(
+        self,
+        username: str,
+    ):
+        try:
+            endpoint = "send_reset_password_email/v0"
+
+            json = {
+                "username": username,
+            }
+            return self._make_request(method="POST", endpoint=endpoint, json=json)
+        except Exception:
+            raise
