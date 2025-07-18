@@ -383,3 +383,31 @@ class SquareAuthenticationHelper:
             return self._make_request(method="POST", endpoint=endpoint, headers=headers)
         except Exception:
             raise
+
+    def update_profile_details_v0(
+        self,
+        access_token: str,
+        first_name: str = None,
+        last_name: str = None,
+        email: str = None,
+        phone_number_country_code: str = None,
+        phone_number: str = None,
+    ):
+        try:
+            endpoint = "update_profile_details/v0"
+            headers = {
+                "access_token": access_token,
+            }
+            json = {
+                "first_name": first_name,
+                "last_name": last_name,
+                "email": email,
+                "phone_number_country_code": phone_number_country_code,
+                "phone_number": phone_number,
+            }
+
+            return self._make_request(
+                method="POST", endpoint=endpoint, json=json, headers=headers
+            )
+        except Exception:
+            raise
