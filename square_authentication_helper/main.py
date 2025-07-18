@@ -369,3 +369,17 @@ class SquareAuthenticationHelper:
             )
         except Exception:
             raise
+
+    def send_verification_email_v0(
+        self,
+        access_token: str,
+    ):
+        try:
+            endpoint = "send_verification_email/v0"
+            headers = {
+                "access_token": access_token,
+            }
+
+            return self._make_request(method="POST", endpoint=endpoint, headers=headers)
+        except Exception:
+            raise
