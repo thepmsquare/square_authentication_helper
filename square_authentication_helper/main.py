@@ -225,12 +225,16 @@ class SquareAuthenticationHelper:
         old_password: str,
         new_password: str,
         access_token: str,
+        logout_other_sessions: bool = False,
+        preserve_session_refresh_token: str = None,
     ):
         try:
             endpoint = "update_password/v0"
             data = {
                 "old_password": old_password,
                 "new_password": new_password,
+                "logout_other_sessions": logout_other_sessions,
+                "preserve_session_refresh_token": preserve_session_refresh_token,
             }
             headers = {
                 "access_token": access_token,
@@ -328,6 +332,20 @@ class SquareAuthenticationHelper:
                 "new_password": new_password,
                 "app_id": app_id,
                 "logout_other_sessions": logout_other_sessions,
+            }
+            return self._make_request(method="POST", endpoint=endpoint, json=json)
+        except Exception:
+            raise
+
+    def send_reset_password_email_v0(
+        self,
+        username: str,
+    ):
+        try:
+            endpoint = "send_reset_password_email/v0"
+
+            json = {
+                "username": username,
             }
             return self._make_request(method="POST", endpoint=endpoint, json=json)
         except Exception:
