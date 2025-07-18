@@ -438,3 +438,26 @@ class SquareAuthenticationHelper:
             )
         except Exception:
             raise
+
+    def register_login_google_v0(
+        self,
+        google_id: str,
+        app_id: int = None,
+        assign_app_id_if_missing: bool = False,
+    ):
+        try:
+            endpoint = "register_login_google/v0"
+
+            json = {
+                "google_id": google_id,
+                "app_id": app_id,
+                "assign_app_id_if_missing": assign_app_id_if_missing,
+            }
+
+            return self._make_request(
+                method="POST",
+                endpoint=endpoint,
+                json=json,
+            )
+        except Exception:
+            raise
