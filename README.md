@@ -28,6 +28,7 @@ pip install square_authentication_helper
 - add reset_password_and_login_using_backup_code_v0.
 - add send_reset_password_email_v0.
 - update parameters for update_password_v0.
+- add validate_email_verification_code_v0.
 - dependencies
     - add square_database_structure>=2.5.7.
 
