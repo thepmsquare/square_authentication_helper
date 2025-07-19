@@ -20,6 +20,10 @@ pip install square_authentication_helper
 
 ## changelog
 
+### v2.5.1
+
+- bugfix in method for update_profile_details_v0.
+
 ### v2.5.0
 
 - delete_user_v0 now uses post method.

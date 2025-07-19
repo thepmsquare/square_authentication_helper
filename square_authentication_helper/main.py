@@ -407,7 +407,7 @@ class SquareAuthenticationHelper:
             }
 
             return self._make_request(
-                method="POST", endpoint=endpoint, json=json, headers=headers
+                method="PATCH", endpoint=endpoint, json=json, headers=headers
             )
         except Exception:
             raise
