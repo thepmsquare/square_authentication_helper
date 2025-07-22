@@ -282,18 +282,29 @@ class SquareAuthenticationHelper:
     def update_user_recovery_methods_v0(
         self,
         access_token: str,
-        recovery_methods_to_add: List[RecoveryMethodEnum],
-        recovery_methods_to_remove: List[RecoveryMethodEnum],
+        recovery_methods_to_add: List[RecoveryMethodEnum] = None,
+        recovery_methods_to_remove: List[RecoveryMethodEnum] = None,
     ):
+        if recovery_methods_to_add is None:
+            recovery_methods_to_add = []
+        if recovery_methods_to_remove is None:
+            recovery_methods_to_remove = []
         try:
             endpoint = "update_user_recovery_methods/v0"
 
             headers = {
                 "access_token": access_token,
             }
+            # convert to json serializable format
+            recovery_methods_to_add_formatted = [
+                method.value for method in recovery_methods_to_add
+            ]
+            recovery_methods_to_remove_formatted = [
+                method.value for method in recovery_methods_to_remove
+            ]
             json = {
-                "recovery_methods_to_add": recovery_methods_to_add,
-                "recovery_methods_to_remove": recovery_methods_to_remove,
+                "recovery_methods_to_add": recovery_methods_to_add_formatted,
+                "recovery_methods_to_remove": recovery_methods_to_remove_formatted,
             }
             return self._make_request(
                 method="PATCH", endpoint=endpoint, headers=headers, json=json

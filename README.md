@@ -20,6 +20,10 @@ pip install square_authentication_helper
 
 ## changelog
 
+### v2.5.2
+
+- bugfix in update_user_recovery_methods_v0 (json serializer and optional parameters).
+
 ### v2.5.1
 
 - bugfix in method for update_profile_details_v0.
