@@ -20,6 +20,10 @@ pip install square_authentication_helper
 
 ## changelog
 
+### v3.0.0
+
+- **breaking change**: new mandatory parameter `app_id` in validate_and_get_payload_from_token_v0.
+
 ### v2.5.2
 
 - bugfix in update_user_recovery_methods_v0 (json serializer and optional parameters).

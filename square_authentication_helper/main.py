@@ -245,10 +245,12 @@ class SquareAuthenticationHelper:
         except Exception:
             raise
 
-    def validate_and_get_payload_from_token_v0(self, token: str, token_type: TokenType):
+    def validate_and_get_payload_from_token_v0(
+        self, token: str, token_type: TokenType, app_id: int
+    ):
         try:
             endpoint = "validate_and_get_payload_from_token/v0"
-            params = {"token_type": token_type.value}
+            params = {"token_type": token_type.value, "app_id": app_id}
             headers = {
                 "token": token,
             }
