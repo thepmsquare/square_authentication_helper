@@ -124,7 +124,7 @@ class SquareAuthenticationHelper:
                 "app_ids": app_ids,
             }
             return self._make_request(
-                method="DELETE", endpoint=endpoint, headers=headers, json=body
+                method="POST", endpoint=endpoint, headers=headers, json=body
             )
         except Exception:
             raise

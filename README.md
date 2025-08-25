@@ -20,6 +20,10 @@ pip install square_authentication_helper
 
 ## changelog
 
+### v3.0.1
+
+- logout_apps_v0 internally uses POST method instead of DELETE, compatible with square_authentication>=10.0.0.
+
 ### v3.0.0
 
 - **breaking change**: new mandatory parameter `app_id` in validate_and_get_payload_from_token_v0.
