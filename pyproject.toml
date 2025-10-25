@@ -1,10 +1,10 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["uv-build"]
+build-backend = "uv_build"
 
 [project]
 name = "square_authentication_helper"
-version = "3.0.3"
+version = "3.0.4"
 description = "helper to access the authentication layer for my personal server."
 readme = "README.md"
 readme-content-type = "text/markdown"
@@ -30,5 +30,6 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules"
 ]
 
-[tool.hatch.build.targets.wheel]
-packages = ["square_authentication_helper"]
+[tool.uv.build-backend]
+module-name = "square_authentication_helper"
+module-root = ""
