@@ -411,7 +411,7 @@ class SquareAuthenticationHelper:
             headers = {
                 "access_token": access_token,
             }
-            json = {
+            params = {
                 "first_name": first_name,
                 "last_name": last_name,
                 "email": email,
@@ -420,7 +420,7 @@ class SquareAuthenticationHelper:
             }
 
             return self._make_request(
-                method="PATCH", endpoint=endpoint, json=json, headers=headers
+                method="PATCH", endpoint=endpoint, params=params, headers=headers
             )
         except Exception:
             raise

@@ -1,5 +1,9 @@
 # changelog
 
+## v3.0.5
+
+- bugfix: update_profile_details_v0 request send data as params instead of body.
+
 ## v3.0.4
 
 - switch build-system to uv.
