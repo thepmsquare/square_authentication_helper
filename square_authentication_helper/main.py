@@ -474,3 +474,20 @@ class SquareAuthenticationHelper:
             )
         except Exception:
             raise
+
+    def get_user_recovery_methods_v0(self, username: str):
+
+        try:
+            endpoint = "get_user_recovery_methods/v0"
+
+            params = {
+                "username": username,
+            }
+
+            return self._make_request(
+                method="GET",
+                endpoint=endpoint,
+                params=params,
+            )
+        except Exception:
+            raise

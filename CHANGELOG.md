@@ -1,5 +1,9 @@
 # changelog
 
+## v3.1.0
+
+- add get_user_recovery_methods_v0.
+
 ## v3.0.5
 
 - bugfix: update_profile_details_v0 request send data as params instead of body.
