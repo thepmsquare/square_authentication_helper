@@ -1,5 +1,11 @@
 # changelog
 
+## v3.2.0
+
+- add unit tests.
+- dependencies
+    - add pytest, pytest-cov, pytest-mock and black to all and dev optional sections.
+
 ## v3.1.0
 
 - add get_user_recovery_methods_v0.

@@ -4,7 +4,7 @@ build-backend = "uv_build"
 
 [project]
 name = "square_authentication_helper"
-version = "3.1.0"
+version = "3.2.0"
 description = "helper to access the authentication layer for my personal server."
 readme = "README.md"
 readme-content-type = "text/markdown"
@@ -29,7 +29,19 @@ classifiers = [
     "Topic :: Security",
     "Topic :: Software Development :: Libraries :: Python Modules"
 ]
-
+[project.optional-dependencies]
+all = [
+    "black>=25.12.0",
+    "pytest>=9.0.2",
+    "pytest-cov>=7.0.0",
+    "pytest-mock>=3.15.1",
+]
+dev = [
+    "black>=25.12.0",
+    "pytest>=9.0.2",
+    "pytest-cov>=7.0.0",
+    "pytest-mock>=3.15.1",
+]
 [tool.uv.build-backend]
 module-name = "square_authentication_helper"
 module-root = ""
