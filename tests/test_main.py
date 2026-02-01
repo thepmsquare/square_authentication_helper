@@ -2,10 +2,9 @@ from io import BytesIO
 from unittest.mock import patch
 
 import pytest
-from square_database_structure.square.authentication.enums import RecoveryMethodEnum
-
 from square_authentication_helper.main import SquareAuthenticationHelper
 from square_authentication_helper.pydantic_models import TokenType
+from square_database_structure.square.authentication.enums import RecoveryMethodEnum
 
 
 class TestSquareAuthenticationHelperInit:
@@ -48,7 +47,7 @@ class TestSquareAuthenticationHelperMakeRequest:
         """Fixture to create a SquareAuthenticationHelper instance"""
         return SquareAuthenticationHelper()
 
-    @patch("square_authentication_helper.main.make_request_json_output")
+    @patch("square_authentication_helper.main.make_request")
     def test_make_request_success(self, mock_make_request, helper):
         """Test successful request"""
         mock_make_request.return_value = {"status": "success"}
@@ -59,17 +58,18 @@ class TestSquareAuthenticationHelperMakeRequest:
 
         mock_make_request.assert_called_once_with(
             method="POST",
-            base_url="http://localhost:10011",
+            url="http://localhost:10011",
             endpoint="test/endpoint",
             json={"key": "value"},
             data=None,
             params=None,
             headers=None,
             files=None,
+            return_type="json",
         )
         assert result == {"status": "success"}
 
-    @patch("square_authentication_helper.main.make_request_json_output")
+    @patch("square_authentication_helper.main.make_request")
     def test_make_request_with_all_parameters(self, mock_make_request, helper):
         """Test request with all parameters"""
         mock_make_request.return_value = {"status": "success"}
@@ -87,7 +87,7 @@ class TestSquareAuthenticationHelperMakeRequest:
         mock_make_request.assert_called_once()
         assert result == {"status": "success"}
 
-    @patch("square_authentication_helper.main.make_request_json_output")
+    @patch("square_authentication_helper.main.make_request")
     def test_make_request_exception(self, mock_make_request, helper):
         """Test request raises exception"""
         mock_make_request.side_effect = Exception("Request failed")

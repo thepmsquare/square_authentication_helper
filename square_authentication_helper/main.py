@@ -1,9 +1,11 @@
-from typing import List, Optional, Tuple, IO
+from typing import List, Optional, Tuple, IO, Any, overload, Literal, Dict
 
-from square_commons.api_utils import make_request_json_output
+from square_authentication_helper.pydantic_models import (
+    TokenType,
+    RegisterUsernameV0Response,
+)
+from square_commons.api_utils import make_request, StandardResponse
 from square_database_structure.square.authentication.enums import RecoveryMethodEnum
-
-from square_authentication_helper.pydantic_models import TokenType
 
 
 class SquareAuthenticationHelper:
@@ -32,26 +34,44 @@ class SquareAuthenticationHelper:
         files=None,
     ):
         try:
-            return make_request_json_output(
+            return make_request(
                 method=method,
-                base_url=self.global_str_square_authentication_url_base,
+                url=self.global_str_square_authentication_url_base,
                 endpoint=endpoint,
                 json=json,
                 data=data,
                 params=params,
                 headers=headers,
                 files=files,
+                return_type="json",
             )
 
         except Exception:
             raise
 
+    @overload
     def register_username_v0(
         self,
         username: str,
         password: str,
         app_id: Optional[int] = None,
-    ):
+        response_as_pydantic: Literal[True] = ...,
+    ) -> StandardResponse[RegisterUsernameV0Response]: ...
+    @overload
+    def register_username_v0(
+        self,
+        username: str,
+        password: str,
+        app_id: Optional[int] = None,
+        response_as_pydantic: Literal[False] = ...,
+    ) -> Dict[str, Any]: ...
+    def register_username_v0(
+        self,
+        username: str,
+        password: str,
+        app_id: Optional[int] = None,
+        response_as_pydantic: bool = False,
+    ) -> Any:
         try:
             endpoint = "register_username/v0"
             data = {
@@ -59,7 +79,12 @@ class SquareAuthenticationHelper:
                 "password": password,
                 "app_id": app_id,
             }
-            return self._make_request(method="POST", endpoint=endpoint, json=data)
+            response = self._make_request(method="POST", endpoint=endpoint, json=data)
+
+            if response_as_pydantic:
+                return StandardResponse[RegisterUsernameV0Response](**response)
+            else:
+                return response
         except Exception:
             raise
 
@@ -69,7 +94,8 @@ class SquareAuthenticationHelper:
         password: str,
         app_id: int,
         assign_app_id_if_missing: bool = False,
-    ):
+        response_as_pydantic: bool = False,
+    ) -> Any:
         try:
             endpoint = "login_username/v0"
             data = {
@@ -85,7 +111,8 @@ class SquareAuthenticationHelper:
     def generate_access_token_v0(
         self,
         refresh_token: str,
-    ):
+        response_as_pydantic: bool = False,
+    ) -> Any:
         try:
             endpoint = "generate_access_token/v0"
             headers = {
@@ -98,7 +125,8 @@ class SquareAuthenticationHelper:
     def logout_v0(
         self,
         refresh_token: str,
-    ):
+        response_as_pydantic: bool = False,
+    ) -> Any:
         try:
             endpoint = "logout/v0"
             headers = {
@@ -114,7 +142,8 @@ class SquareAuthenticationHelper:
         self,
         access_token: str,
         app_ids: List[int],
-    ):
+        response_as_pydantic: bool = False,
+    ) -> Any:
         try:
             endpoint = "logout/apps/v0"
             headers = {
@@ -132,7 +161,8 @@ class SquareAuthenticationHelper:
     def logout_all_v0(
         self,
         access_token: str,
-    ):
+        response_as_pydantic: bool = False,
+    ) -> Any:
         try:
             endpoint = "logout/all/v0"
             headers = {
@@ -147,7 +177,8 @@ class SquareAuthenticationHelper:
     def get_user_details_v0(
         self,
         access_token: str,
-    ):
+        response_as_pydantic: bool = False,
+    ) -> Any:
         try:
             endpoint = "get_user_details/v0"
             headers = {
@@ -166,7 +197,8 @@ class SquareAuthenticationHelper:
         access_token: str,
         app_ids_to_add: List[int],
         app_ids_to_remove: List[int],
-    ):
+        response_as_pydantic: bool = False,
+    ) -> Any:
         try:
             endpoint = "update_user_app_ids/v0"
             headers = {
@@ -186,7 +218,8 @@ class SquareAuthenticationHelper:
         self,
         new_username: str,
         access_token: str,
-    ):
+        response_as_pydantic: bool = False,
+    ) -> Any:
         try:
             endpoint = "update_username/v0"
             params = {
@@ -205,7 +238,8 @@ class SquareAuthenticationHelper:
         self,
         password: str,
         access_token: str,
-    ):
+        response_as_pydantic: bool = False,
+    ) -> Any:
         try:
             endpoint = "delete_user/v0"
             data = {
@@ -227,7 +261,8 @@ class SquareAuthenticationHelper:
         access_token: str,
         logout_other_sessions: bool = False,
         preserve_session_refresh_token: str = None,
-    ):
+        response_as_pydantic: bool = False,
+    ) -> Any:
         try:
             endpoint = "update_password/v0"
             data = {
@@ -246,8 +281,12 @@ class SquareAuthenticationHelper:
             raise
 
     def validate_and_get_payload_from_token_v0(
-        self, token: str, token_type: TokenType, app_id: int
-    ):
+        self,
+        token: str,
+        token_type: TokenType,
+        app_id: int,
+        response_as_pydantic: bool = False,
+    ) -> Any:
         try:
             endpoint = "validate_and_get_payload_from_token/v0"
             params = {"token_type": token_type.value, "app_id": app_id}
@@ -261,8 +300,11 @@ class SquareAuthenticationHelper:
             raise
 
     def update_profile_photo_v0(
-        self, access_token: str, profile_photo: Tuple[str, IO, str] | None
-    ):
+        self,
+        access_token: str,
+        profile_photo: Tuple[str, IO, str] | None,
+        response_as_pydantic: bool = False,
+    ) -> Any:
         try:
             endpoint = "update_profile_photo/v0"
 
@@ -286,7 +328,8 @@ class SquareAuthenticationHelper:
         access_token: str,
         recovery_methods_to_add: List[RecoveryMethodEnum] = None,
         recovery_methods_to_remove: List[RecoveryMethodEnum] = None,
-    ):
+        response_as_pydantic: bool = False,
+    ) -> Any:
         if recovery_methods_to_add is None:
             recovery_methods_to_add = []
         if recovery_methods_to_remove is None:
@@ -317,7 +360,8 @@ class SquareAuthenticationHelper:
     def generate_account_backup_codes_v0(
         self,
         access_token: str,
-    ):
+        response_as_pydantic: bool = False,
+    ) -> Any:
         try:
             endpoint = "generate_account_backup_codes/v0"
 
@@ -335,7 +379,8 @@ class SquareAuthenticationHelper:
         new_password: str,
         app_id: int,
         logout_other_sessions: bool = False,
-    ):
+        response_as_pydantic: bool = False,
+    ) -> Any:
         try:
             endpoint = "reset_password_and_login_using_backup_code/v0"
 
@@ -353,7 +398,8 @@ class SquareAuthenticationHelper:
     def send_reset_password_email_v0(
         self,
         username: str,
-    ):
+        response_as_pydantic: bool = False,
+    ) -> Any:
         try:
             endpoint = "send_reset_password_email/v0"
 
@@ -368,7 +414,8 @@ class SquareAuthenticationHelper:
         self,
         access_token: str,
         verification_code: str,
-    ):
+        response_as_pydantic: bool = False,
+    ) -> Any:
         try:
             endpoint = "validate_email_verification_code/v0"
             headers = {
@@ -386,7 +433,8 @@ class SquareAuthenticationHelper:
     def send_verification_email_v0(
         self,
         access_token: str,
-    ):
+        response_as_pydantic: bool = False,
+    ) -> Any:
         try:
             endpoint = "send_verification_email/v0"
             headers = {
@@ -405,7 +453,8 @@ class SquareAuthenticationHelper:
         email: str = None,
         phone_number_country_code: str = None,
         phone_number: str = None,
-    ):
+        response_as_pydantic: bool = False,
+    ) -> Any:
         try:
             endpoint = "update_profile_details/v0"
             headers = {
@@ -432,7 +481,8 @@ class SquareAuthenticationHelper:
         new_password: str,
         app_id: int,
         logout_other_sessions: bool = False,
-    ):
+        response_as_pydantic: bool = False,
+    ) -> Any:
         try:
             endpoint = "reset_password_and_login_using_reset_email_code/v0"
 
@@ -457,7 +507,8 @@ class SquareAuthenticationHelper:
         google_id: str,
         app_id: int = None,
         assign_app_id_if_missing: bool = False,
-    ):
+        response_as_pydantic: bool = False,
+    ) -> Any:
         try:
             endpoint = "register_login_google/v0"
 
@@ -475,7 +526,11 @@ class SquareAuthenticationHelper:
         except Exception:
             raise
 
-    def get_user_recovery_methods_v0(self, username: str):
+    def get_user_recovery_methods_v0(
+        self,
+        username: str,
+        response_as_pydantic: bool = False,
+    ) -> Any:
 
         try:
             endpoint = "get_user_recovery_methods/v0"
