@@ -1,11 +1,14 @@
 from typing import List, Optional, Tuple, IO, Any, overload, Literal, Dict
 
+from square_commons.api_utils import make_request, StandardResponse
+from square_database_structure.square.authentication.enums import RecoveryMethodEnum
+
 from square_authentication_helper.pydantic_models import (
     TokenType,
     RegisterUsernameV0Response,
+    LoginUsernameV0Response,
+    GenerateAccessTokenV0Response,
 )
-from square_commons.api_utils import make_request, StandardResponse
-from square_database_structure.square.authentication.enums import RecoveryMethodEnum
 
 
 class SquareAuthenticationHelper:
@@ -88,6 +91,24 @@ class SquareAuthenticationHelper:
         except Exception:
             raise
 
+    @overload
+    def login_username_v0(
+        self,
+        username: str,
+        password: str,
+        app_id: int,
+        assign_app_id_if_missing: bool = False,
+        response_as_pydantic: Literal[True] = ...,
+    ) -> StandardResponse[LoginUsernameV0Response]: ...
+    @overload
+    def login_username_v0(
+        self,
+        username: str,
+        password: str,
+        app_id: int,
+        assign_app_id_if_missing: bool = False,
+        response_as_pydantic: Literal[False] = ...,
+    ) -> Dict[str, Any]: ...
     def login_username_v0(
         self,
         username: str,
@@ -104,10 +125,26 @@ class SquareAuthenticationHelper:
                 "app_id": app_id,
                 "assign_app_id_if_missing": assign_app_id_if_missing,
             }
-            return self._make_request(method="POST", endpoint=endpoint, json=data)
+            response = self._make_request(method="POST", endpoint=endpoint, json=data)
+            if response_as_pydantic:
+                return StandardResponse[LoginUsernameV0Response](**response)
+            else:
+                return response
         except Exception:
             raise
 
+    @overload
+    def generate_access_token_v0(
+        self,
+        refresh_token: str,
+        response_as_pydantic: Literal[True] = ...,
+    ) -> StandardResponse[GenerateAccessTokenV0Response]: ...
+    @overload
+    def generate_access_token_v0(
+        self,
+        refresh_token: str,
+        response_as_pydantic: Literal[False] = ...,
+    ) -> Dict[str, Any]: ...
     def generate_access_token_v0(
         self,
         refresh_token: str,
@@ -118,7 +155,13 @@ class SquareAuthenticationHelper:
             headers = {
                 "refresh_token": refresh_token,
             }
-            return self._make_request(method="GET", endpoint=endpoint, headers=headers)
+            response = self._make_request(
+                method="GET", endpoint=endpoint, headers=headers
+            )
+            if response_as_pydantic:
+                return StandardResponse[GenerateAccessTokenV0Response](**response)
+            else:
+                return response
         except Exception:
             raise
 
