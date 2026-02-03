@@ -8,6 +8,8 @@ from square_authentication_helper.pydantic_models import (
     RegisterUsernameV0Response,
     LoginUsernameV0Response,
     GenerateAccessTokenV0Response,
+    LogoutV0Response,
+    LogoutAppsV0Response,
 )
 
 
@@ -165,6 +167,20 @@ class SquareAuthenticationHelper:
         except Exception:
             raise
 
+    @overload
+    def logout_v0(
+        self,
+        refresh_token: str,
+        response_as_pydantic: Literal[True] = ...,
+    ) -> LogoutV0Response: ...
+
+    @overload
+    def logout_v0(
+        self,
+        refresh_token: str,
+        response_as_pydantic: Literal[False] = ...,
+    ) -> Dict[str, Any]: ...
+
     def logout_v0(
         self,
         refresh_token: str,
@@ -175,12 +191,30 @@ class SquareAuthenticationHelper:
             headers = {
                 "refresh_token": refresh_token,
             }
-            return self._make_request(
+            response = self._make_request(
                 method="DELETE", endpoint=endpoint, headers=headers
             )
+            if response_as_pydantic:
+                return LogoutV0Response(**response)
+            else:
+                return response
         except Exception:
             raise
 
+    @overload
+    def logout_apps_v0(
+        self,
+        access_token: str,
+        app_ids: List[int],
+        response_as_pydantic: Literal[True] = ...,
+    ) -> LogoutAppsV0Response: ...
+    @overload
+    def logout_apps_v0(
+        self,
+        access_token: str,
+        app_ids: List[int],
+        response_as_pydantic: Literal[False] = ...,
+    ) -> Dict[str, Any]: ...
     def logout_apps_v0(
         self,
         access_token: str,
@@ -195,9 +229,13 @@ class SquareAuthenticationHelper:
             body = {
                 "app_ids": app_ids,
             }
-            return self._make_request(
+            response = self._make_request(
                 method="POST", endpoint=endpoint, headers=headers, json=body
             )
+            if response_as_pydantic:
+                return LogoutAppsV0Response(**response)
+            else:
+                return response
         except Exception:
             raise
 
