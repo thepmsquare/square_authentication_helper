@@ -1,6 +1,6 @@
 # changelog
 
-## v3.3.0 (in progress)
+## v3.3.0
 
 - migrate from make_request_json_output to make_request from square_commons.
 - Add response pydantic models for all helper methods.

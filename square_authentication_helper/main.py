@@ -10,6 +10,23 @@ from square_authentication_helper.pydantic_models import (
     GenerateAccessTokenV0Response,
     LogoutV0Response,
     LogoutAppsV0Response,
+    GetUserDetailsV0Response,
+    LogoutAllV0Response,
+    UpdateUserAppIdsV0Response,
+    UpdateUsernameV0Response,
+    DeleteUserV0Response,
+    UpdatePasswordV0Response,
+    ValidateAndGetPayloadFromTokenV0Response,
+    UpdateProfilePhotoV0Response,
+    UpdateUserRecoveryMethodsV0Response,
+    GenerateAccountBackupCodesV0Response,
+    ResetPasswordAndLoginUsingBackupCodeV0Response,
+    SendResetPasswordEmailV0Response,
+    ValidateEmailVerificationCodeV0Response,
+    SendVerificationEmailV0Response,
+    UpdateProfileDetailsV0Response,
+    ResetPasswordAndLoginUsingResetEmailCodeV0Response,
+    RegisterLoginGoogleV0Response,
 )
 
 
@@ -239,6 +256,20 @@ class SquareAuthenticationHelper:
         except Exception:
             raise
 
+    @overload
+    def logout_all_v0(
+        self,
+        access_token: str,
+        response_as_pydantic: Literal[True] = ...,
+    ) -> LogoutAllV0Response: ...
+
+    @overload
+    def logout_all_v0(
+        self,
+        access_token: str,
+        response_as_pydantic: Literal[False] = ...,
+    ) -> Dict[str, Any]: ...
+
     def logout_all_v0(
         self,
         access_token: str,
@@ -249,11 +280,29 @@ class SquareAuthenticationHelper:
             headers = {
                 "access_token": access_token,
             }
-            return self._make_request(
+            response = self._make_request(
                 method="DELETE", endpoint=endpoint, headers=headers
             )
+            if response_as_pydantic:
+                return LogoutAllV0Response(**response)
+            else:
+                return response
         except Exception:
             raise
+
+    @overload
+    def get_user_details_v0(
+        self,
+        access_token: str,
+        response_as_pydantic: Literal[True] = ...,
+    ) -> StandardResponse[GetUserDetailsV0Response]: ...
+
+    @overload
+    def get_user_details_v0(
+        self,
+        access_token: str,
+        response_as_pydantic: Literal[False] = ...,
+    ) -> Dict[str, Any]: ...
 
     def get_user_details_v0(
         self,
@@ -265,13 +314,35 @@ class SquareAuthenticationHelper:
             headers = {
                 "access_token": access_token,
             }
-            return self._make_request(
+            response = self._make_request(
                 method="GET",
                 endpoint=endpoint,
                 headers=headers,
             )
+            if response_as_pydantic:
+                return StandardResponse[GetUserDetailsV0Response](**response)
+            else:
+                return response
         except Exception:
             raise
+
+    @overload
+    def update_user_app_ids_v0(
+        self,
+        access_token: str,
+        app_ids_to_add: List[int],
+        app_ids_to_remove: List[int],
+        response_as_pydantic: Literal[True] = ...,
+    ) -> StandardResponse[UpdateUserAppIdsV0Response]: ...
+
+    @overload
+    def update_user_app_ids_v0(
+        self,
+        access_token: str,
+        app_ids_to_add: List[int],
+        app_ids_to_remove: List[int],
+        response_as_pydantic: Literal[False] = ...,
+    ) -> Dict[str, Any]: ...
 
     def update_user_app_ids_v0(
         self,
@@ -289,11 +360,31 @@ class SquareAuthenticationHelper:
                 "app_ids_to_add": app_ids_to_add,
                 "app_ids_to_remove": app_ids_to_remove,
             }
-            return self._make_request(
+            response = self._make_request(
                 method="PATCH", endpoint=endpoint, headers=headers, json=payload
             )
+            if response_as_pydantic:
+                return StandardResponse[UpdateUserAppIdsV0Response](**response)
+            else:
+                return response
         except Exception:
             raise
+
+    @overload
+    def update_username_v0(
+        self,
+        new_username: str,
+        access_token: str,
+        response_as_pydantic: Literal[True] = ...,
+    ) -> StandardResponse[UpdateUsernameV0Response]: ...
+
+    @overload
+    def update_username_v0(
+        self,
+        new_username: str,
+        access_token: str,
+        response_as_pydantic: Literal[False] = ...,
+    ) -> Dict[str, Any]: ...
 
     def update_username_v0(
         self,
@@ -309,11 +400,31 @@ class SquareAuthenticationHelper:
             headers = {
                 "access_token": access_token,
             }
-            return self._make_request(
+            response = self._make_request(
                 method="PATCH", endpoint=endpoint, params=params, headers=headers
             )
+            if response_as_pydantic:
+                return StandardResponse[UpdateUsernameV0Response](**response)
+            else:
+                return response
         except Exception:
             raise
+
+    @overload
+    def delete_user_v0(
+        self,
+        password: str,
+        access_token: str,
+        response_as_pydantic: Literal[True] = ...,
+    ) -> DeleteUserV0Response: ...
+
+    @overload
+    def delete_user_v0(
+        self,
+        password: str,
+        access_token: str,
+        response_as_pydantic: Literal[False] = ...,
+    ) -> Dict[str, Any]: ...
 
     def delete_user_v0(
         self,
@@ -329,11 +440,37 @@ class SquareAuthenticationHelper:
             headers = {
                 "access_token": access_token,
             }
-            return self._make_request(
+            response = self._make_request(
                 method="POST", endpoint=endpoint, json=data, headers=headers
             )
+            if response_as_pydantic:
+                return DeleteUserV0Response(**response)
+            else:
+                return response
         except Exception:
             raise
+
+    @overload
+    def update_password_v0(
+        self,
+        old_password: str,
+        new_password: str,
+        access_token: str,
+        logout_other_sessions: bool = False,
+        preserve_session_refresh_token: str = None,
+        response_as_pydantic: Literal[True] = ...,
+    ) -> UpdatePasswordV0Response: ...
+
+    @overload
+    def update_password_v0(
+        self,
+        old_password: str,
+        new_password: str,
+        access_token: str,
+        logout_other_sessions: bool = False,
+        preserve_session_refresh_token: str = None,
+        response_as_pydantic: Literal[False] = ...,
+    ) -> Dict[str, Any]: ...
 
     def update_password_v0(
         self,
@@ -355,11 +492,33 @@ class SquareAuthenticationHelper:
             headers = {
                 "access_token": access_token,
             }
-            return self._make_request(
+            response = self._make_request(
                 method="PATCH", endpoint=endpoint, json=data, headers=headers
             )
+            if response_as_pydantic:
+                return UpdatePasswordV0Response(**response)
+            else:
+                return response
         except Exception:
             raise
+
+    @overload
+    def validate_and_get_payload_from_token_v0(
+        self,
+        token: str,
+        token_type: TokenType,
+        app_id: int,
+        response_as_pydantic: Literal[True] = ...,
+    ) -> StandardResponse[ValidateAndGetPayloadFromTokenV0Response]: ...
+
+    @overload
+    def validate_and_get_payload_from_token_v0(
+        self,
+        token: str,
+        token_type: TokenType,
+        app_id: int,
+        response_as_pydantic: Literal[False] = ...,
+    ) -> Dict[str, Any]: ...
 
     def validate_and_get_payload_from_token_v0(
         self,
@@ -374,11 +533,33 @@ class SquareAuthenticationHelper:
             headers = {
                 "token": token,
             }
-            return self._make_request(
+            response = self._make_request(
                 method="GET", endpoint=endpoint, headers=headers, params=params
             )
+            if response_as_pydantic:
+                return StandardResponse[ValidateAndGetPayloadFromTokenV0Response](
+                    **response
+                )
+            else:
+                return response
         except Exception:
             raise
+
+    @overload
+    def update_profile_photo_v0(
+        self,
+        access_token: str,
+        profile_photo: Tuple[str, IO, str] | None,
+        response_as_pydantic: Literal[True] = ...,
+    ) -> StandardResponse[UpdateProfilePhotoV0Response]: ...
+
+    @overload
+    def update_profile_photo_v0(
+        self,
+        access_token: str,
+        profile_photo: Tuple[str, IO, str] | None,
+        response_as_pydantic: Literal[False] = ...,
+    ) -> Dict[str, Any]: ...
 
     def update_profile_photo_v0(
         self,
@@ -398,11 +579,33 @@ class SquareAuthenticationHelper:
                 }
             else:
                 files = None
-            return self._make_request(
+            response = self._make_request(
                 method="PATCH", endpoint=endpoint, headers=headers, files=files
             )
+            if response_as_pydantic:
+                return StandardResponse[UpdateProfilePhotoV0Response](**response)
+            else:
+                return response
         except Exception:
             raise
+
+    @overload
+    def update_user_recovery_methods_v0(
+        self,
+        access_token: str,
+        recovery_methods_to_add: List[RecoveryMethodEnum] = None,
+        recovery_methods_to_remove: List[RecoveryMethodEnum] = None,
+        response_as_pydantic: Literal[True] = ...,
+    ) -> StandardResponse[UpdateUserRecoveryMethodsV0Response]: ...
+
+    @overload
+    def update_user_recovery_methods_v0(
+        self,
+        access_token: str,
+        recovery_methods_to_add: List[RecoveryMethodEnum] = None,
+        recovery_methods_to_remove: List[RecoveryMethodEnum] = None,
+        response_as_pydantic: Literal[False] = ...,
+    ) -> Dict[str, Any]: ...
 
     def update_user_recovery_methods_v0(
         self,
@@ -432,11 +635,29 @@ class SquareAuthenticationHelper:
                 "recovery_methods_to_add": recovery_methods_to_add_formatted,
                 "recovery_methods_to_remove": recovery_methods_to_remove_formatted,
             }
-            return self._make_request(
+            response = self._make_request(
                 method="PATCH", endpoint=endpoint, headers=headers, json=json
             )
+            if response_as_pydantic:
+                return StandardResponse[UpdateUserRecoveryMethodsV0Response](**response)
+            else:
+                return response
         except Exception:
             raise
+
+    @overload
+    def generate_account_backup_codes_v0(
+        self,
+        access_token: str,
+        response_as_pydantic: Literal[True] = ...,
+    ) -> StandardResponse[GenerateAccountBackupCodesV0Response]: ...
+
+    @overload
+    def generate_account_backup_codes_v0(
+        self,
+        access_token: str,
+        response_as_pydantic: Literal[False] = ...,
+    ) -> Dict[str, Any]: ...
 
     def generate_account_backup_codes_v0(
         self,
@@ -449,9 +670,39 @@ class SquareAuthenticationHelper:
             headers = {
                 "access_token": access_token,
             }
-            return self._make_request(method="POST", endpoint=endpoint, headers=headers)
+            response = self._make_request(
+                method="POST", endpoint=endpoint, headers=headers
+            )
+            if response_as_pydantic:
+                return StandardResponse[GenerateAccountBackupCodesV0Response](
+                    **response
+                )
+            else:
+                return response
         except Exception:
             raise
+
+    @overload
+    def reset_password_and_login_using_backup_code_v0(
+        self,
+        backup_code: str,
+        username: str,
+        new_password: str,
+        app_id: int,
+        logout_other_sessions: bool = False,
+        response_as_pydantic: Literal[True] = ...,
+    ) -> StandardResponse[ResetPasswordAndLoginUsingBackupCodeV0Response]: ...
+
+    @overload
+    def reset_password_and_login_using_backup_code_v0(
+        self,
+        backup_code: str,
+        username: str,
+        new_password: str,
+        app_id: int,
+        logout_other_sessions: bool = False,
+        response_as_pydantic: Literal[False] = ...,
+    ) -> Dict[str, Any]: ...
 
     def reset_password_and_login_using_backup_code_v0(
         self,
@@ -472,9 +723,29 @@ class SquareAuthenticationHelper:
                 "app_id": app_id,
                 "logout_other_sessions": logout_other_sessions,
             }
-            return self._make_request(method="POST", endpoint=endpoint, json=json)
+            response = self._make_request(method="POST", endpoint=endpoint, json=json)
+            if response_as_pydantic:
+                return StandardResponse[ResetPasswordAndLoginUsingBackupCodeV0Response](
+                    **response
+                )
+            else:
+                return response
         except Exception:
             raise
+
+    @overload
+    def send_reset_password_email_v0(
+        self,
+        username: str,
+        response_as_pydantic: Literal[True] = ...,
+    ) -> StandardResponse[SendResetPasswordEmailV0Response]: ...
+
+    @overload
+    def send_reset_password_email_v0(
+        self,
+        username: str,
+        response_as_pydantic: Literal[False] = ...,
+    ) -> Dict[str, Any]: ...
 
     def send_reset_password_email_v0(
         self,
@@ -487,9 +758,29 @@ class SquareAuthenticationHelper:
             json = {
                 "username": username,
             }
-            return self._make_request(method="POST", endpoint=endpoint, json=json)
+            response = self._make_request(method="POST", endpoint=endpoint, json=json)
+            if response_as_pydantic:
+                return StandardResponse[SendResetPasswordEmailV0Response](**response)
+            else:
+                return response
         except Exception:
             raise
+
+    @overload
+    def validate_email_verification_code_v0(
+        self,
+        access_token: str,
+        verification_code: str,
+        response_as_pydantic: Literal[True] = ...,
+    ) -> StandardResponse[ValidateEmailVerificationCodeV0Response]: ...
+
+    @overload
+    def validate_email_verification_code_v0(
+        self,
+        access_token: str,
+        verification_code: str,
+        response_as_pydantic: Literal[False] = ...,
+    ) -> Dict[str, Any]: ...
 
     def validate_email_verification_code_v0(
         self,
@@ -505,11 +796,31 @@ class SquareAuthenticationHelper:
             json = {
                 "verification_code": verification_code,
             }
-            return self._make_request(
+            response = self._make_request(
                 method="POST", endpoint=endpoint, json=json, headers=headers
             )
+            if response_as_pydantic:
+                return StandardResponse[ValidateEmailVerificationCodeV0Response](
+                    **response
+                )
+            else:
+                return response
         except Exception:
             raise
+
+    @overload
+    def send_verification_email_v0(
+        self,
+        access_token: str,
+        response_as_pydantic: Literal[True] = ...,
+    ) -> StandardResponse[SendVerificationEmailV0Response]: ...
+
+    @overload
+    def send_verification_email_v0(
+        self,
+        access_token: str,
+        response_as_pydantic: Literal[False] = ...,
+    ) -> Dict[str, Any]: ...
 
     def send_verification_email_v0(
         self,
@@ -522,9 +833,39 @@ class SquareAuthenticationHelper:
                 "access_token": access_token,
             }
 
-            return self._make_request(method="POST", endpoint=endpoint, headers=headers)
+            response = self._make_request(
+                method="POST", endpoint=endpoint, headers=headers
+            )
+            if response_as_pydantic:
+                return StandardResponse[SendVerificationEmailV0Response](**response)
+            else:
+                return response
         except Exception:
             raise
+
+    @overload
+    def update_profile_details_v0(
+        self,
+        access_token: str,
+        first_name: str = None,
+        last_name: str = None,
+        email: str = None,
+        phone_number_country_code: str = None,
+        phone_number: str = None,
+        response_as_pydantic: Literal[True] = ...,
+    ) -> StandardResponse[UpdateProfileDetailsV0Response]: ...
+
+    @overload
+    def update_profile_details_v0(
+        self,
+        access_token: str,
+        first_name: str = None,
+        last_name: str = None,
+        email: str = None,
+        phone_number_country_code: str = None,
+        phone_number: str = None,
+        response_as_pydantic: Literal[False] = ...,
+    ) -> Dict[str, Any]: ...
 
     def update_profile_details_v0(
         self,
@@ -549,11 +890,37 @@ class SquareAuthenticationHelper:
                 "phone_number": phone_number,
             }
 
-            return self._make_request(
+            response = self._make_request(
                 method="PATCH", endpoint=endpoint, params=params, headers=headers
             )
+            if response_as_pydantic:
+                return StandardResponse[UpdateProfileDetailsV0Response](**response)
+            else:
+                return response
         except Exception:
             raise
+
+    @overload
+    def reset_password_and_login_using_reset_email_code_v0(
+        self,
+        reset_email_code: str,
+        username: str,
+        new_password: str,
+        app_id: int,
+        logout_other_sessions: bool = False,
+        response_as_pydantic: Literal[True] = ...,
+    ) -> StandardResponse[ResetPasswordAndLoginUsingResetEmailCodeV0Response]: ...
+
+    @overload
+    def reset_password_and_login_using_reset_email_code_v0(
+        self,
+        reset_email_code: str,
+        username: str,
+        new_password: str,
+        app_id: int,
+        logout_other_sessions: bool = False,
+        response_as_pydantic: Literal[False] = ...,
+    ) -> Dict[str, Any]: ...
 
     def reset_password_and_login_using_reset_email_code_v0(
         self,
@@ -575,13 +942,37 @@ class SquareAuthenticationHelper:
                 "logout_other_sessions": logout_other_sessions,
             }
 
-            return self._make_request(
+            response = self._make_request(
                 method="POST",
                 endpoint=endpoint,
                 json=json,
             )
+            if response_as_pydantic:
+                return StandardResponse[
+                    ResetPasswordAndLoginUsingResetEmailCodeV0Response
+                ](**response)
+            else:
+                return response
         except Exception:
             raise
+
+    @overload
+    def register_login_google_v0(
+        self,
+        google_id: str,
+        app_id: int = None,
+        assign_app_id_if_missing: bool = False,
+        response_as_pydantic: Literal[True] = ...,
+    ) -> StandardResponse[RegisterLoginGoogleV0Response]: ...
+
+    @overload
+    def register_login_google_v0(
+        self,
+        google_id: str,
+        app_id: int = None,
+        assign_app_id_if_missing: bool = False,
+        response_as_pydantic: Literal[False] = ...,
+    ) -> Dict[str, Any]: ...
 
     def register_login_google_v0(
         self,
@@ -599,13 +990,31 @@ class SquareAuthenticationHelper:
                 "assign_app_id_if_missing": assign_app_id_if_missing,
             }
 
-            return self._make_request(
+            response = self._make_request(
                 method="POST",
                 endpoint=endpoint,
                 json=json,
             )
+            if response_as_pydantic:
+                return StandardResponse[RegisterLoginGoogleV0Response](**response)
+            else:
+                return response
         except Exception:
             raise
+
+    @overload
+    def get_user_recovery_methods_v0(
+        self,
+        username: str,
+        response_as_pydantic: Literal[True] = ...,
+    ) -> StandardResponse[GetUserDetailsV0Response]: ...
+
+    @overload
+    def get_user_recovery_methods_v0(
+        self,
+        username: str,
+        response_as_pydantic: Literal[False] = ...,
+    ) -> Dict[str, Any]: ...
 
     def get_user_recovery_methods_v0(
         self,
@@ -620,10 +1029,14 @@ class SquareAuthenticationHelper:
                 "username": username,
             }
 
-            return self._make_request(
+            response = self._make_request(
                 method="GET",
                 endpoint=endpoint,
                 params=params,
             )
+            if response_as_pydantic:
+                return StandardResponse[GetUserDetailsV0Response](**response)
+            else:
+                return response
         except Exception:
             raise
