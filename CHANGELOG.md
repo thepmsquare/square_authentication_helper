@@ -1,5 +1,9 @@
 # changelog
 
+## v3.3.1
+
+- bugfix: update output type conversation in get_user_recovery_methods_v0.
+
 ## v3.3.0
 
 - migrate from make_request_json_output to make_request from square_commons.

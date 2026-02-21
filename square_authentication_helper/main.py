@@ -27,6 +27,7 @@ from square_authentication_helper.pydantic_models import (
     UpdateProfileDetailsV0Response,
     ResetPasswordAndLoginUsingResetEmailCodeV0Response,
     RegisterLoginGoogleV0Response,
+    GetUserRecoveryMethodsV0Response,
 )
 
 
@@ -1035,7 +1036,7 @@ class SquareAuthenticationHelper:
                 params=params,
             )
             if response_as_pydantic:
-                return StandardResponse[GetUserDetailsV0Response](**response)
+                return StandardResponse[GetUserRecoveryMethodsV0Response](**response)
             else:
                 return response
         except Exception:
