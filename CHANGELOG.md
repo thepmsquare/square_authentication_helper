@@ -1,5 +1,9 @@
 # changelog
 
+## v4.0.0
+
+- **breaking change**: update UpdateProfileDetailsV0Response.
+
 ## v3.3.1
 
 - bugfix: update output type conversation in get_user_recovery_methods_v0.
