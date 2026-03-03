@@ -1,5 +1,9 @@
 # changelog
 
+## v4.1.0
+
+- update GetUserRecoveryMethodsV0Response.
+
 ## v4.0.0
 
 - **breaking change**: update UpdateProfileDetailsV0Response.
