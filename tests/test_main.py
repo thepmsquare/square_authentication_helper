@@ -277,7 +277,11 @@ class TestUserManagement:
     @patch.object(SquareAuthenticationHelper, "_make_request")
     def test_get_user_details_v0(self, mock_request, helper):
         """Test getting user details"""
-        mock_request.return_value = {"user_id": 123, "username": "testuser"}
+        mock_request.return_value = {
+            "user_id": "123",
+            "username": "testuser",
+            "auth_providers": ["google"],
+        }
 
         result = helper.get_user_details_v0(access_token="access123")
 
