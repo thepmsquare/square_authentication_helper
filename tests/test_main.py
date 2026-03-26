@@ -402,12 +402,14 @@ class TestPasswordManagement:
         """Test sending password reset email"""
         mock_request.return_value = {"success": True}
 
-        result = helper.send_reset_password_email_v0(username="testuser")
+        result = helper.send_reset_password_email_v0(
+            username="testuser", redirect_url="http://example.com"
+        )
 
         mock_request.assert_called_once_with(
             method="POST",
             endpoint="send_reset_password_email/v0",
-            json={"username": "testuser"},
+            json={"username": "testuser", "redirect_url": "http://example.com"},
         )
 
     @patch.object(SquareAuthenticationHelper, "_make_request")
@@ -575,12 +577,15 @@ class TestEmailVerification:
         """Test sending verification email"""
         mock_request.return_value = {"success": True}
 
-        result = helper.send_verification_email_v0(access_token="access123")
+        result = helper.send_verification_email_v0(
+            access_token="access123", redirect_url="http://example.com"
+        )
 
         mock_request.assert_called_once_with(
             method="POST",
             endpoint="send_verification_email/v0",
             headers={"access_token": "access123"},
+            json={"redirect_url": "http://example.com"},
         )
 
     @patch.object(SquareAuthenticationHelper, "_make_request")
@@ -630,3 +635,59 @@ class TestExceptionHandling:
 
         with pytest.raises(Exception):
             helper.update_password_v0("old", "new", "token")
+
+
+class TestAuthProviderMethods:
+    """Test authentication provider management methods"""
+
+    @pytest.fixture
+    def helper(self):
+        return SquareAuthenticationHelper()
+
+    @patch.object(SquareAuthenticationHelper, "_make_request")
+    def test_add_self_auth_provider_v0(self, mock_request, helper):
+        """Test adding self auth provider"""
+        mock_request.return_value = {"auth_providers": ["self"]}
+
+        result = helper.add_self_auth_provider_v0(
+            access_token="access123", password="password123"
+        )
+
+        mock_request.assert_called_once_with(
+            method="POST",
+            endpoint="add_self_auth_provider/v0",
+            headers={"access_token": "access123"},
+            json={"password": "password123"},
+        )
+
+    @patch.object(SquareAuthenticationHelper, "_make_request")
+    def test_add_google_auth_provider_v0(self, mock_request, helper):
+        """Test adding google auth provider"""
+        mock_request.return_value = {"auth_providers": ["google"]}
+
+        result = helper.add_google_auth_provider_v0(
+            access_token="access123", google_id_token="google_token"
+        )
+
+        mock_request.assert_called_once_with(
+            method="POST",
+            endpoint="add_google_auth_provider/v0",
+            headers={"access_token": "access123"},
+            json={"google_id_token": "google_token"},
+        )
+
+    @patch.object(SquareAuthenticationHelper, "_make_request")
+    def test_unlink_auth_provider_v0(self, mock_request, helper):
+        """Test unlinking auth provider"""
+        mock_request.return_value = {"auth_providers": []}
+
+        result = helper.unlink_auth_provider_v0(
+            access_token="access123", auth_provider="google"
+        )
+
+        mock_request.assert_called_once_with(
+            method="POST",
+            endpoint="unlink_auth_provider/v0",
+            headers={"access_token": "access123"},
+            json={"auth_provider": "google"},
+        )

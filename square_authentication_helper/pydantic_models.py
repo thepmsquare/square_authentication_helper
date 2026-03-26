@@ -209,3 +209,27 @@ class UpdateProfileDetailsV0Response(BaseModel):
 
 class ValidateEmailVerificationCodeV0Response(BaseModel):
     user_profile_email_verified: str
+
+
+class AddSelfAuthProviderV0ResponseMain(BaseModel):
+    auth_providers: List[str]
+
+
+class AddSelfAuthProviderV0Response(BaseModel):
+    main: AddSelfAuthProviderV0ResponseMain
+
+
+class AddGoogleAuthProviderV0ResponseMain(BaseModel):
+    auth_providers: List[str]
+
+
+class AddGoogleAuthProviderV0Response(BaseModel):
+    main: AddGoogleAuthProviderV0ResponseMain
+
+
+class UnlinkAuthProviderV0ResponseMain(BaseModel):
+    auth_providers: List[str]
+
+
+class UnlinkAuthProviderV0Response(BaseModel):
+    main: UnlinkAuthProviderV0ResponseMain

@@ -28,6 +28,9 @@ from square_authentication_helper.pydantic_models import (
     ResetPasswordAndLoginUsingResetEmailCodeV0Response,
     RegisterLoginGoogleV0Response,
     GetUserRecoveryMethodsV0Response,
+    AddSelfAuthProviderV0Response,
+    AddGoogleAuthProviderV0Response,
+    UnlinkAuthProviderV0Response,
 )
 
 
@@ -738,6 +741,7 @@ class SquareAuthenticationHelper:
     def send_reset_password_email_v0(
         self,
         username: str,
+        redirect_url: str = None,
         response_as_pydantic: Literal[True] = ...,
     ) -> StandardResponse[SendResetPasswordEmailV0Response]: ...
 
@@ -745,12 +749,14 @@ class SquareAuthenticationHelper:
     def send_reset_password_email_v0(
         self,
         username: str,
+        redirect_url: str = None,
         response_as_pydantic: Literal[False] = ...,
     ) -> Dict[str, Any]: ...
 
     def send_reset_password_email_v0(
         self,
         username: str,
+        redirect_url: str = None,
         response_as_pydantic: bool = False,
     ) -> Any:
         try:
@@ -758,6 +764,7 @@ class SquareAuthenticationHelper:
 
             json = {
                 "username": username,
+                "redirect_url": redirect_url,
             }
             response = self._make_request(method="POST", endpoint=endpoint, json=json)
             if response_as_pydantic:
@@ -813,6 +820,7 @@ class SquareAuthenticationHelper:
     def send_verification_email_v0(
         self,
         access_token: str,
+        redirect_url: str = None,
         response_as_pydantic: Literal[True] = ...,
     ) -> StandardResponse[SendVerificationEmailV0Response]: ...
 
@@ -820,12 +828,14 @@ class SquareAuthenticationHelper:
     def send_verification_email_v0(
         self,
         access_token: str,
+        redirect_url: str = None,
         response_as_pydantic: Literal[False] = ...,
     ) -> Dict[str, Any]: ...
 
     def send_verification_email_v0(
         self,
         access_token: str,
+        redirect_url: str = None,
         response_as_pydantic: bool = False,
     ) -> Any:
         try:
@@ -833,9 +843,12 @@ class SquareAuthenticationHelper:
             headers = {
                 "access_token": access_token,
             }
+            body = {
+                "redirect_url": redirect_url,
+            }
 
             response = self._make_request(
-                method="POST", endpoint=endpoint, headers=headers
+                method="POST", endpoint=endpoint, headers=headers, json=body
             )
             if response_as_pydantic:
                 return StandardResponse[SendVerificationEmailV0Response](**response)
@@ -1037,6 +1050,126 @@ class SquareAuthenticationHelper:
             )
             if response_as_pydantic:
                 return StandardResponse[GetUserRecoveryMethodsV0Response](**response)
+            else:
+                return response
+        except Exception:
+            raise
+
+    @overload
+    def add_self_auth_provider_v0(
+        self,
+        access_token: str,
+        password: str,
+        response_as_pydantic: Literal[True] = ...,
+    ) -> StandardResponse[AddSelfAuthProviderV0Response]: ...
+
+    @overload
+    def add_self_auth_provider_v0(
+        self,
+        access_token: str,
+        password: str,
+        response_as_pydantic: Literal[False] = ...,
+    ) -> Dict[str, Any]: ...
+
+    def add_self_auth_provider_v0(
+        self,
+        access_token: str,
+        password: str,
+        response_as_pydantic: bool = False,
+    ) -> Any:
+        try:
+            endpoint = "add_self_auth_provider/v0"
+            headers = {
+                "access_token": access_token,
+            }
+            json = {
+                "password": password,
+            }
+            response = self._make_request(
+                method="POST", endpoint=endpoint, headers=headers, json=json
+            )
+            if response_as_pydantic:
+                return StandardResponse[AddSelfAuthProviderV0Response](**response)
+            else:
+                return response
+        except Exception:
+            raise
+
+    @overload
+    def add_google_auth_provider_v0(
+        self,
+        access_token: str,
+        google_id_token: str,
+        response_as_pydantic: Literal[True] = ...,
+    ) -> StandardResponse[AddGoogleAuthProviderV0Response]: ...
+
+    @overload
+    def add_google_auth_provider_v0(
+        self,
+        access_token: str,
+        google_id_token: str,
+        response_as_pydantic: Literal[False] = ...,
+    ) -> Dict[str, Any]: ...
+
+    def add_google_auth_provider_v0(
+        self,
+        access_token: str,
+        google_id_token: str,
+        response_as_pydantic: bool = False,
+    ) -> Any:
+        try:
+            endpoint = "add_google_auth_provider/v0"
+            headers = {
+                "access_token": access_token,
+            }
+            json = {
+                "google_id_token": google_id_token,
+            }
+            response = self._make_request(
+                method="POST", endpoint=endpoint, headers=headers, json=json
+            )
+            if response_as_pydantic:
+                return StandardResponse[AddGoogleAuthProviderV0Response](**response)
+            else:
+                return response
+        except Exception:
+            raise
+
+    @overload
+    def unlink_auth_provider_v0(
+        self,
+        access_token: str,
+        auth_provider: str,
+        response_as_pydantic: Literal[True] = ...,
+    ) -> StandardResponse[UnlinkAuthProviderV0Response]: ...
+
+    @overload
+    def unlink_auth_provider_v0(
+        self,
+        access_token: str,
+        auth_provider: str,
+        response_as_pydantic: Literal[False] = ...,
+    ) -> Dict[str, Any]: ...
+
+    def unlink_auth_provider_v0(
+        self,
+        access_token: str,
+        auth_provider: str,
+        response_as_pydantic: bool = False,
+    ) -> Any:
+        try:
+            endpoint = "unlink_auth_provider/v0"
+            headers = {
+                "access_token": access_token,
+            }
+            json = {
+                "auth_provider": auth_provider,
+            }
+            response = self._make_request(
+                method="POST", endpoint=endpoint, headers=headers, json=json
+            )
+            if response_as_pydantic:
+                return StandardResponse[UnlinkAuthProviderV0Response](**response)
             else:
                 return response
         except Exception:

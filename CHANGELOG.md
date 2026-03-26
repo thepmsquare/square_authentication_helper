@@ -1,5 +1,10 @@
 # changelog
  
+## v4.3.0
+
+- add `add_self_auth_provider_v0`, `add_google_auth_provider_v0`, `unlink_auth_provider_v0`.
+- update `send_verification_email_v0` and `send_reset_password_email_v0` to accept optional `redirect_url`.
+
 ## v4.2.0
  
 - update `GetUserDetailsV0ResponseMain` to include `auth_providers`.
